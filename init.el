@@ -256,7 +256,14 @@ cider."
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
+(defun next-word (p)
+   "Move point to the beginning of the next word, past any spaces, the default behaviour is very weird, places the point at the space between words,
+    http://stackoverflow.com/a/2078945"
+   (interactive "d")
+   (forward-word)
+   (forward-word)
+   (backward-word))
+(global-set-key "\M-f" 'next-word)
+
 (provide 'init)
 ;;; init.el ends here
-
-
