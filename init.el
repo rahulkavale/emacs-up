@@ -265,5 +265,10 @@ cider."
    (backward-word))
 (global-set-key "\M-f" 'next-word)
 
+;; enable hide show mode
+(hs-minor-mode 1)
+(global-set-key (kbd "C-_") 'hs-hide-all)
+(global-set-key (kbd "C-+") 'hs-show-all)
+(global-set-key (kbd "C-M-=") 'hs-toggle-hiding)
 (provide 'init)
 ;;; init.el ends here
