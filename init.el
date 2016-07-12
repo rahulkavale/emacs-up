@@ -46,6 +46,7 @@
      idea-darkula-theme ; idea darkula themse same as for intelliJ idea darkula
      expand-region ; better selection for increasing the content selected incementally
      nav  ; enables directory browsing
+     multiple-cursors ; add multiple cursors
      ))
   "List of packages to install on top of default Emacs.")
 
@@ -237,6 +238,24 @@ cider."
 
 ;; change binding for switching between windows
 (global-set-key (kbd "M-o") 'other-window)
+
+;;change clj refactor prefix keybinding
+(cljr-add-keybindings-with-prefix "C-c RET")
+(setq cljr-warn-on-eval nil)
+
+;;disable arrow keys
+(global-unset-key (kbd "<left>"))
+(global-unset-key (kbd "<right>") )
+(global-unset-key (kbd "<up>") )
+(global-unset-key (kbd "<down>") )
+
+;; enable multiple cursors
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
 (provide 'init)
 ;;; init.el ends here
 
