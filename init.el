@@ -235,6 +235,8 @@ cider."
 (custom-set-variables
  '(initial-frame-alist (quote ((fullscreen . maximized)))))
 
+;; change binding for switching between windows
+(global-set-key (kbd "M-o") 'other-window)
 (provide 'init)
 ;;; init.el ends here
 
