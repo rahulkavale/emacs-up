@@ -266,9 +266,18 @@ cider."
 (global-set-key "\M-f" 'next-word)
 
 ;; enable hide show mode
-(hs-minor-mode 1)
+(add-hook 'clojure-mode-hook 'hs-minor-mode)
+
 (global-set-key (kbd "C-_") 'hs-hide-all)
 (global-set-key (kbd "C-+") 'hs-show-all)
 (global-set-key (kbd "C-M-=") 'hs-toggle-hiding)
+
+;; include multiple lives overalpping for smooth scorilling of screens
+(setq scroll-step 10)
+
+;; enable linum mode by default
+(setq linum-format "%2d\u2502")
+(global-linum-mode 1)
+
 (provide 'init)
 ;;; init.el ends here
