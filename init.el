@@ -43,6 +43,9 @@
      cider    ; Clojure Interactive Development Environment that Rocks
      clj-refactor ; A collection of simple clojure refactoring functions
      zenburn-theme ; A low contrast color theme for Emacs.
+     idea-darkula-theme ; idea darkula themse same as for intelliJ idea darkula
+     expand-region ; better selection for increasing the content selected incementally
+     nav  ; enables directory browsing
      ))
   "List of packages to install on top of default Emacs.")
 
@@ -205,7 +208,7 @@ cider."
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("40f6a7af0dfad67c0d4df2a1dd86175436d79fc69ea61614d668a635c2cd94ab" default)))
+    ("345f8f92edc3508574c61850b98a2e0a7a3f5ba3bb9ed03a50f6e41546fe2de0" "40f6a7af0dfad67c0d4df2a1dd86175436d79fc69ea61614d668a635c2cd94ab" default)))
  '(package-selected-packages
    (quote
     (clj-refactor cider magit paredit avy helm company better-defaults exec-path-from-shell))))
@@ -219,8 +222,20 @@ cider."
 ;;; Theme and Look
 ;; This should load after `custom-safe-themes' to avoid Emacs
 ;; panicking about whether it is safe or not.
-(load-theme 'zenburn)
+(load-theme 'idea-darkula t)
 
+;;expand-region config
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
+;; enable delete selection mode which allows to delete/replace text in a selection region
+(delete-selection-mode 1)
+
+;; starts emacs in full screen
+(custom-set-variables
+ '(initial-frame-alist (quote ((fullscreen . maximized)))))
 
 (provide 'init)
 ;;; init.el ends here
+
+
