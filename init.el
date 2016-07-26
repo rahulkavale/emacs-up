@@ -256,14 +256,14 @@ cider."
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-(defun next-word (p)
-   "Move point to the beginning of the next word, past any spaces, the default behaviour is very weird, places the point at the space between words,
-    http://stackoverflow.com/a/2078945"
-   (interactive "d")
-   (forward-word)
-   (forward-word)
-   (backward-word))
-(global-set-key "\M-f" 'next-word)
+;; (defun next-word (p)
+;;    "Move point to the beginning of the next word, past any spaces, the default behaviour is very weird, places the point at the space between words,
+;;     http://stackoverflow.com/a/2078945"
+;;    (interactive "d")
+;;    (forward-word)
+;;    (forward-word)
+;;    (backward-word))
+;; (global-set-key "\M-f" 'next-word)
 
 ;; enable hide show mode
 (add-hook 'clojure-mode-hook 'hs-minor-mode)
@@ -275,9 +275,12 @@ cider."
 ;; include multiple lives overalpping for smooth scorilling of screens
 (setq scroll-step 10)
 
-;; enable linum mode by default
+;; enable linum mode by default to display line numbers for every file
 (setq linum-format "%2d\u2502")
 (global-linum-mode 1)
+
+;;; Set font to a readable one
+(set-face-attribute 'default nil :height 150)
 
 (provide 'init)
 ;;; init.el ends here
