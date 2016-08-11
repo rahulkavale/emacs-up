@@ -200,7 +200,8 @@ cider."
 
      (eval-after-load 'clojure-mode
        '(progn
-          (add-hook 'clojure-mode-hook 'turn-on-clj-refactor)))))
+          (add-hook 'clojure-mode-hook 'turn-on-clj-refactor)
+          (add-hook 'clojure-mode-hook 'hs-minor-mode)))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -240,7 +241,7 @@ cider."
 (global-set-key (kbd "M-o") 'other-window)
 
 ;;change clj refactor prefix keybinding
-(cljr-add-keybindings-with-prefix "C-c RET")
+(cljr-add-keybindings-with-prefix "C-c m")
 (setq cljr-warn-on-eval nil)
 
 ;;disable arrow keys
@@ -256,21 +257,9 @@ cider."
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-;; (defun next-word (p)
-;;    "Move point to the beginning of the next word, past any spaces, the default behaviour is very weird, places the point at the space between words,
-;;     http://stackoverflow.com/a/2078945"
-;;    (interactive "d")
-;;    (forward-word)
-;;    (forward-word)
-;;    (backward-word))
-;; (global-set-key "\M-f" 'next-word)
-
-;; enable hide show mode
-(add-hook 'clojure-mode-hook 'hs-minor-mode)
-
-(global-set-key (kbd "C-_") 'hs-hide-all)
-(global-set-key (kbd "C-+") 'hs-show-all)
-(global-set-key (kbd "C-M-=") 'hs-toggle-hiding)
+(global-set-key (kbd "C-c C-_") 'hs-hide-all)
+(global-set-key (kbd "C-c C-+") 'hs-show-all)
+(global-set-key (kbd "C-c C-M-=") 'hs-toggle-hiding)
 
 ;; include multiple lives overalpping for smooth scorilling of screens
 (setq scroll-step 10)
@@ -281,6 +270,9 @@ cider."
 
 ;;; Set font to a readable one
 (set-face-attribute 'default nil :height 150)
+
+;;; avoid running tests eargerly when we connect to nrepl
+(setq cljr-eagerly-build-asts-on-startup nil)
 
 (provide 'init)
 ;;; init.el ends here
