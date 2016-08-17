@@ -47,6 +47,8 @@
      expand-region ; better selection for increasing the content selected incementally
      nav  ; enables directory browsing
      multiple-cursors ; add multiple cursors
+     json-mode ; json mode for editing json
+     anzu      ; package which shows total number of matches for a search
      ))
   "List of packages to install on top of default Emacs.")
 
@@ -273,6 +275,9 @@ cider."
 
 ;;; avoid running tests eargerly when we connect to nrepl
 (setq cljr-eagerly-build-asts-on-startup nil)
+
+;; Enable anzu mode everywhere
+(global-anzu-mode +1)
 
 (provide 'init)
 ;;; init.el ends here
