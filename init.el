@@ -330,5 +330,8 @@ cider."
 ;;; Set cider-eval-buffer to C-c e
 (global-set-key (kbd "C-c e") 'cider-eval-buffer)
 
+;;; Enable column number mode to show current column number along with the line number
+(setq column-number-mode t)
+
 (provide 'init)
 ;;; init.el ends here
