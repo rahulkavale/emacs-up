@@ -276,8 +276,18 @@ cider."
 ;;; avoid running tests eargerly when we connect to nrepl
 (setq cljr-eagerly-build-asts-on-startup nil)
 
+(setq cljr-warn-on-eval nil)
+
 ;; Enable anzu mode everywhere
 (global-anzu-mode +1)
+
+;;; Reload the buffer without asking for confirmation
+(defun revert-buffer-no-confirm ()
+    "Revert buffer without confirmation."
+    (interactive)
+    (revert-buffer :ignore-auto :noconfirm))
+
+(global-set-key (kbd "C-c C-r") 'revert-buffer-no-confirm)
 
 (provide 'init)
 ;;; init.el ends here
