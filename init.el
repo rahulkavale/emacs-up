@@ -288,7 +288,7 @@ cider."
     (interactive)
     (revert-buffer :ignore-auto :noconfirm))
 
-(global-set-key (kbd "C-c C-r") 'revert-buffer-no-confirm)
+(global-set-key (kbd "C-c C-b") 'revert-buffer-no-confirm)
 
 ;;; Duplicating a line http://stackoverflow.com/a/998472
 (defun duplicate-line (arg)
@@ -339,6 +339,7 @@ cider."
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+
 
 (provide 'init)
 ;;; init.el ends here
