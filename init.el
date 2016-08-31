@@ -49,6 +49,7 @@
      multiple-cursors ; add multiple cursors
      json-mode ; json mode for editing json
      anzu      ; package which shows total number of matches for a search
+     smex      ; M-x autocompletion sorted by most recently used ones
      ))
   "List of packages to install on top of default Emacs.")
 
@@ -332,6 +333,12 @@ cider."
 
 ;;; Enable column number mode to show current column number along with the line number
 (setq column-number-mode t)
+
+;;; Enable smex and its bindings
+(require 'smex)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 
 (provide 'init)
 ;;; init.el ends here
