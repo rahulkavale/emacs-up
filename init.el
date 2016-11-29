@@ -199,7 +199,10 @@ cider."
 
      (setq cljr-favor-prefix-notation nil
            ; stops cljr from running tests when we connect to the repl
-           cljr-eagerly-build-asts-on-startup nil)
+           cljr-eagerly-build-asts-on-startup nil
+           ;; stop trying to add import when typing / . This also does not
+           ;; work with multiple select
+           cljr-magic-require-namespaces nil)
 
      (eval-after-load 'clojure-mode
        '(progn
@@ -328,9 +331,6 @@ cider."
 
 (global-set-key (kbd "C-c C-d C-l") 'duplicate-line)
 
-;;; Set cider-eval-buffer to C-c e
-(global-set-key (kbd "C-c e") 'cider-eval-buffer)
-
 ;;; Enable column number mode to show current column number along with the line number
 (setq column-number-mode t)
 
@@ -339,6 +339,15 @@ cider."
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+
+(global-set-key (kbd "C-c C-z") 'cider-load-buffer-and-switch-to-repl-buffer)
+
+;;; Ask before quiting emacs
+(global-set-key (kbd "C-x C-c")
+                '(lambda ()
+                   (interactive)
+                   (if (y-or-n-p "Quit Emacs? ")
+                       (save-buffers-kill-emacs))))
 
 
 (provide 'init)
