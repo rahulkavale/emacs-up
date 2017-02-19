@@ -50,6 +50,9 @@
      json-mode ; json mode for editing json
      anzu      ; package which shows total number of matches for a search
      smex      ; M-x autocompletion sorted by most recently used ones
+     projectile ; project level operations
+     helm-cider ; helm completions for cider
+     helm-ag
      ))
   "List of packages to install on top of default Emacs.")
 
@@ -217,9 +220,10 @@ cider."
  '(custom-safe-themes
    (quote
     ("345f8f92edc3508574c61850b98a2e0a7a3f5ba3bb9ed03a50f6e41546fe2de0" "40f6a7af0dfad67c0d4df2a1dd86175436d79fc69ea61614d668a635c2cd94ab" default)))
+ '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (clj-refactor cider magit paredit avy helm company better-defaults exec-path-from-shell))))
+    (helm-ag smex anzu json-mode nav expand-region idea-darkula-theme zenburn-theme helm-cider projectile clj-refactor cider magit paredit avy helm company better-defaults exec-path-from-shell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -240,8 +244,7 @@ cider."
 (delete-selection-mode 1)
 
 ;; starts emacs in full screen
-(custom-set-variables
- '(initial-frame-alist (quote ((fullscreen . maximized)))))
+
 
 ;; change binding for switching between windows
 (global-set-key (kbd "M-o") 'other-window)
@@ -340,7 +343,10 @@ cider."
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 
-(global-set-key (kbd "C-c C-z") 'cider-load-buffer-and-switch-to-repl-buffer)
+;;; Enable projectile globally
+(require 'projectile)
+(projectile-global-mode)
+
 
 ;;; Ask before quiting emacs
 (global-set-key (kbd "C-x C-c")
@@ -348,6 +354,49 @@ cider."
                    (interactive)
                    (if (y-or-n-p "Quit Emacs? ")
                        (save-buffers-kill-emacs))))
+
+;;; Enable helm cider mode
+(helm-cider-mode 1)
+
+(defun helm-do-grep-ag-with-directory (arg)
+ "Do `helm-do-grep-ag' with `default-directory' set to D."
+ (interactive "P")
+ (let ((default-directory (expand-file-name (vc-root-dir))))
+   (call-interactively 'helm-do-grep-ag arg)))
+
+(defun helm-grep-it (arg)
+  "Run the_silver_search with `helm-do-grep.
+Argument ARG is the prefix argument which when not supplied causes `vc-root-dir'
+to be the default root.  Otherwise current-directory is the default root."
+  (interactive "P")
+  (if arg
+      (call-interactively 'helm-do-grep-ag-with-directory)
+    ;; Now let it be a bit more convenient.
+    (let* ((default-directory (expand-file-name (or (ignore-errors (vc-root-dir))
+                                                    default-directory)))
+           (ag-type-list '((emacs-lisp-mode . "--elisp")
+                           (clojure-mode . "--clojure")))
+           (ag-type (assoc-default major-mode ag-type-list)))
+      (helm-grep-ag-1 default-directory (list ag-type)))))
+
+
+(global-set-key (kbd "M-N") 'helm-grep-it)
+;;; Use C-c C-f to enable follow mode while running search
+
+(global-set-key (kbd "M-x") 'helm-M-x)
+
+
+(require 'helm-ag)
+
+(setq helm-ag-insert-at-point 'symbol
+      helm-ag-fuzzy-match t)
+
+(global-set-key (kbd "C-x c g a") 'helm-do-ag-project-root)
+(global-set-key (kbd "C-x c g s") 'helm-do-ag)
+;; Move old behaviour to a new key
+(global-set-key (kbd "C-x c g g") 'helm-do-grep-ag)
+
+(provide 'init-helm-ag)
 
 
 (provide 'init)
