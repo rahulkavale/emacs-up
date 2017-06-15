@@ -53,6 +53,8 @@
      projectile ; project level operations
      helm-cider ; helm completions for cider
      helm-ag
+     which-key; auto complete for commands
+     bookmark+ ; allows bookmarking snippets
      ))
   "List of packages to install on top of default Emacs.")
 
@@ -205,7 +207,8 @@ cider."
            cljr-eagerly-build-asts-on-startup nil
            ;; stop trying to add import when typing / . This also does not
            ;; work with multiple select
-           cljr-magic-require-namespaces nil)
+           cljr-magic-require-namespaces nil
+           cljr-ignore-analyzer-errors t)
 
      (eval-after-load 'clojure-mode
        '(progn
@@ -217,13 +220,14 @@ cider."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
  '(custom-safe-themes
    (quote
     ("345f8f92edc3508574c61850b98a2e0a7a3f5ba3bb9ed03a50f6e41546fe2de0" "40f6a7af0dfad67c0d4df2a1dd86175436d79fc69ea61614d668a635c2cd94ab" default)))
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (helm-ag smex anzu json-mode nav expand-region idea-darkula-theme zenburn-theme helm-cider projectile clj-refactor cider magit paredit avy helm company better-defaults exec-path-from-shell))))
+    (wgrep-helm wgrep which-key bookmark+ helm-ag smex anzu json-mode nav expand-region idea-darkula-theme zenburn-theme helm-cider projectile clj-refactor cider magit paredit avy helm company better-defaults exec-path-from-shell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -346,6 +350,7 @@ cider."
 ;;; Enable projectile globally
 (require 'projectile)
 (projectile-global-mode)
+(setq projectile-completion-system 'helm)
 
 
 ;;; Ask before quiting emacs
